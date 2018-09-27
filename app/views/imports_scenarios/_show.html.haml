@@ -1,0 +1,17 @@
+%div{ class: 'container-fluid' }
+  %h4= @scenario.name
+  - @scenario.scenario_steps.each do |step|
+    %div.form-group{ class: 'col-sm-3' }
+      %input{                                                                       |
+        class: 'form-control',                                                      |
+        disabled: 'disabled',                                                       |
+        value: Scenario::STEPS.detect { |v, t| t == step.step_type }.try(:first)    |
+      }                                                                             |
+
+    - value = step.step_value ? step.step_value.split('|') : ''
+    %div.form-group{ class: 'col-sm-9' }
+      %div{ class: 'col-sm-6' }
+        %input{ class: 'form-control', disabled: 'disabled', value: value.first }
+      - if value.length > 1
+        %div{ class: 'col-sm-6' }
+          %input{ class: 'form-control', disabled: 'disabled', value: value.last }

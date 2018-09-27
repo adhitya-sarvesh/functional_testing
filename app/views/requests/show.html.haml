@@ -1,0 +1,46 @@
+%div.center.jumbotron
+  %div.panel-body
+    %form.form-horizontal
+      %div.form-group
+        %div
+          %strong{ class: 'col-sm-1' }= 'Job #'
+        %div{ class: 'col-sm-11' }= @request.id
+
+      %div.form-group
+        %div
+          %strong{ class: 'col-sm-1' }= 'Tags'
+        %div{ class: 'col-sm-11' }
+          - if @request.tags.present?
+            - @request.tags.split(',').each do |tag|
+              %text.tag= ActsAsTaggableOn::Tag.find_by(id: tag)
+
+      %div.form-group
+        %div
+          %strong{ class: 'col-sm-1' }= 'Description'
+        %div{ class: 'col-sm-11' }
+          - if @request.description.present?
+            %pre= @request.description
+
+      %div.form-group
+        %div
+          %strong{ class: 'col-sm-1' }= 'Created By'
+        %div{ class: 'col-sm-11' }= @request.creator.try(:name) || 'Unknown'
+
+      %div.form-group#request-status.hidden
+        %div
+          %strong{ class: 'col-sm-1' }= 'Status'
+        %div.request-status.col-sm-11
+
+      %div.form-group#report-link.hidden
+        %div
+          %strong{ class: 'col-sm-1' }= 'Report'
+        %div.report-link.col-sm-11
+          %a.btn.btn-primary.btn-xs.download-link{       |
+            href: "/download_report_pdf/#{@request.id}", |
+            target: '_blank'                             |
+          }= 'Generating'                                |
+      %div.loading-request-result
+  %div.panel-footer.form-actions
+    = link_to 'Back', requests_path, class: 'btn btn-warning'
+    %button.btn-success.check-status-btn{ type: 'button', class: 'btn btn-primary', 'data-request-id': @request.id }
+      = 'Check Status'

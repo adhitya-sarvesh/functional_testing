@@ -1,0 +1,75 @@
+-if Scenario.count == 0
+  = link_to 'Back', :back
+-else 
+  %div.container-fluid
+    %ul.nav.nav-tabs{ role: 'tablist' }
+      %li.active{ role: 'presentation' }
+        %a{ 'aria-controls': 'scenarios', 'data-toggle': 'tab', href: '#workflows', role: 'tab' } Workflows
+      %li{ role: 'presentation' }
+        %a{ 'aria-controls': 'dom', 'data-toggle': 'tab', href: '#dom', role: 'tab' } DOM Results
+      %li{ role: 'presentation'}
+        %a{ 'aria-controls': 'dev', 'data-toggle': 'tab', href: '#dev', role: 'tab' } Developer View
+  
+    .tab-content
+      %div#workflows.workflow-form.jumbotron.tab-pane.active.fade.in{role: 'tabpanel'}
+        %div.panel.panel-default
+          %div.panel-heading
+            %h4= @workflow.persisted? ? "Workflow ##{@workflow.id}" : 'New Workflow'
+
+        %div.panel-body
+          = nested_form_for @workflow, html: { id: 'save-workflow-form' } do |form|
+            - if @workflow.errors.any?
+              #error_explanation.alert.alert-danger
+                %h2= "#{pluralize(@workflow.errors.count, "error")} prohibited this workflow from being saved:"
+                %ul
+                  - @workflow.errors.full_messages.each do |msg|
+                    %li= msg
+
+            %div.form-group{ class: 'col-sm-4' }
+              %label{ for: 'workflow_name' }= 'Name'
+              %input#workflow_name.form-control{                                        |
+                name: 'workflow[name]', placeholder: 'Workflow Name', type: 'text',     |
+                value: @workflow.name                                                   |
+              }                                                                         |
+
+            %div.form-group.container-fluid{ class: 'col-sm-12' }
+              %label{ for: 'scenarios' }= 'Test Plans'
+              %div.row
+              .workflow-scenarios
+                = form.fields_for :scenarios do |tests|
+                  %div.form-group{ class: "task_#{tests.index}" }
+                  %div.form-group{ class: 'col-sm-8' }
+                    = tests.select :id, options_for_tests,
+                      {}, { class: 'form-control' }  
+                  %div.form-group{ class: 'col-sm-1' }
+                    = tests.link_to_remove 'Remove', class: 'remove-step btn btn-danger btn-xs top-margin-5  pull-right'      
+            %div.form-group
+              = form.link_to_add 'Add Test', :scenarios, class: 'add-step btn btn-primary btn-sm pull-right'  
+        %div.panel-footer.form-actions
+          %button.btn.btn-primary#save-workflow{ type: 'submit' }= 'Save and Execute'  
+          - if @workflow.persisted?
+            %div= link_to 'Destroy', @workflow, method: 'delete', data: { confirm: 'Are you sure?' },
+              class: 'btn btn-danger btn-md destroy-button-align'   
+          %hr
+          %div
+            %i
+              = 'Note'
+              %li= 'Any changes to the Workflow will require it to be Saved and then executed'
+
+        %hr
+        %div.container-fluid
+          .load-icon
+        %div.container-fluid
+          %h4= 'Test Results'
+          .test-results
+            = 'Nothing to show now'
+
+      %div#dom.tab-pane.fade{ role: 'tabpanel' }
+        %h4= 'DOM Results'
+        .dom-results
+          = 'Nothing to show now'
+
+      %div#dev.tab-pane.fade{ role: 'tabpanel' }
+        %h4= 'Developer View'
+        .developer-results
+          %br= 'Nothing to show now'

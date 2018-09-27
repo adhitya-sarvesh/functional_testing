@@ -1,0 +1,46 @@
+-# Modal
+%div{ class: 'modal fade', id: 'xpath_modal', role: 'dialog' }
+  %div{ class: 'modal-dialog modal-md' }
+    %div{ class: 'modal-content' }
+      %div{ class: 'modal-header' }
+        %button.close{ type: 'button', 'data-dismiss': 'modal' } &times;
+        %h4{ class: 'modal-title' }= "What's xPath?"
+      %div{ class: 'modal-body' }
+        %div
+          Basic Expressions
+          %pre
+            = '# Input type for text fields'
+            %br
+            \//input[@type='text']
+            \//input[@value='Name']
+            \//input[@type='submit' AND @name='btnLogin']
+
+          %pre
+            = '# contains usage'
+            %br
+            \//*[contains(@name,'btn')]
+            \//*[contains(text(),'here')]
+            \//*[contains(@href,'guru99.com')]
+
+          %pre
+            = '# type usage'
+            %br
+            \//*[@type='submit' OR @name='btnReset']
+            \/*[@type='submit' OR @name='btnReset']
+
+          %pre
+            = '# Others'
+            %br
+            \//td[text()='UserID']
+            \//label[@id='User']
+            \//*[@class='login']
+            \//a[@href='http://cerner.com/']
+
+        %div
+          References
+          %ol
+            %li
+              %a{ href: 'https://www.w3schools.com/xml/xpath_syntax.asp', target: '_blank' }= 'W3C'
+            %li
+              %a{ href: 'https://www.guru99.com/xpath-selenium.html', target: '_blank' }
+                = 'https://www.guru99.com/xpath-selenium.html'

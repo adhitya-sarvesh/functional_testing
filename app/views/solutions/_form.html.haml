@@ -1,0 +1,57 @@
+= form_for @solution do |f|
+  - if @solution.errors.any?
+    #error_explanation.alert.alert-danger
+      %h5= "#{pluralize(@solution.errors.count, "error")} prohibited this Solution from being saved:"
+      %ul
+        - @solution.errors.full_messages.each do |msg|
+          %li= msg
+
+  %div.form-group
+    %label{ for: 'name' }= 'Name'
+    %input#solution_name.form-control{  |
+      name: 'solution[name]',           |
+      type: 'text',                     |
+      value: @solution.name             |
+    }                                   |
+
+    %br
+    %h4= 'Configurations'
+    %hr
+    = f.fields_for :solution_configurations, @solution.solution_configurations do |configuration|
+      %div.form-group.container-fluid
+        %div{ class: 'col-sm-1' }= 'Configuration'
+        %div{ class: 'col-sm-4' }= configuration.text_field :key, { disabled: :disabled, class: 'form-control' }
+        = configuration.hidden_field :key
+        %div{ class: 'col-sm-1' }= 'Value'
+        - if configuration.object.key == 'prerequisite'
+          %div{ class: 'col-sm-6' }
+            %a#add-prerequisite-link{ href: '#' }= 'Copy default Pre-requisite'
+            = configuration.text_area :value,
+              class: 'form-control prerequisite_description', rows: 7, maxlength: 400,
+                placeholder: request_placeholder.html_safe
+        - else
+          %div{ class: 'col-sm-6' }= configuration.text_field :value, class: 'form-control'
+
+    - if @solution.persisted?
+      %br
+      %h4
+        = 'Memberships'
+        - if @solution.member?(session[:associate_id])
+          = link_to 'Leave?', membership_solution_path(@solution, reason: 'leave'), id: 'solution-memberhship',
+            class: 'pull-right btn btn-md btn-danger'
+        - else
+          = link_to 'Join?', membership_solution_path(@solution, reason: 'join'), id: 'solution-memberhship',
+            class: 'pull-right btn btn-md btn-primary'
+      %hr
+      %table.table.table-bordered.table-condensed.table-striped
+        %tbody
+          %tr
+            - @solution.associates.each do |associate|
+              %td= associate.name
+              %td= associate.email
+
+  %p
+    %br
+    %span.actions
+      = f.submit 'Save', class: 'btn btn-success btn-md'
+      = link_to 'Back', solutions_path, class: 'btn btn-warning btn-md'

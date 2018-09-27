@@ -1,0 +1,94 @@
+body, div, table {
+  font-size: 14px;
+  font-family: Helvatica, Arial, Verdana;
+}
+
+.body-content {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.pad-top-40 {
+  padding-top: 40px;
+}
+
+.pad-left-10 {
+  padding-left: 10px;
+}
+
+.running-scenario-icon {
+  font-size: 50px;
+}
+
+.dom-results {
+  height: 650px;
+  overflow: scroll;
+  padding-top: 20px;
+}
+
+.top-margin-5 {
+  margin-top: 5px;
+}
+
+.top-margin-7 {
+  margin-top: 7px;
+}
+
+.no-left-padding {
+  padding-left: 0;
+}
+
+.no-right-padding {
+  padding-right: 0;
+}
+
+/*
+    Original version: http://www.bootply.com/128062
+
+    This version adds support for IE 10+ and Firefox.
+*/
+
+.glyphicon-refresh-animate {
+    -animation: spin 2s infinite linear;
+    -ms-animation: spin 2s infinite linear;
+    -webkit-animation: spinw 2s infinite linear;
+    -moz-animation: spinm 2s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+
+/*Change place holder color*/
+.form-control::-webkit-input-placeholder {
+  color: #BFBFBF;
+}
+
+.form-control:-moz-placeholder { /* Firefox 18- */
+  color: #BFBFBF;
+}
+
+.form-control::-moz-placeholder { /* Firefox 19+ */
+  color: #BFBFBF;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #BFBFBF;
+}
+  
+
+.destroy-button-align{
+  margin-top: -35px;
+  margin-left: 1400px;
+}  

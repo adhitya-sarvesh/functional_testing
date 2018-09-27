@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @workflow.name
+%p
+  %b Created by:
+  = @workflow.created_by
+
+= link_to 'Edit', edit_workflow_path(@workflow)
+\|
+= link_to 'Back', workflows_path

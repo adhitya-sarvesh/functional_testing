@@ -1,0 +1,29 @@
+%div.center
+  %div.panel.panel-default
+    %div.panel-heading.form-actions
+      %a.pull-right.btn.btn-primary{ href: new_request_path }= 'New Job'
+      %h4= 'Jobs'
+  %table.table.table-striped.table-bordered.table-hover{ id: 'data-table' }
+    %thead
+      %tr
+        %th Job #
+        %th Tags
+        %th Description
+        %th Solution
+        %th Status
+        %th Audit Detail
+    %tbody
+      - @requests.each do |request|
+        %tr
+          %td= link_to request.id, request_path(request)
+          %td.small
+            - if request.tags.present?
+              - request.tags.split(',').each do |tag|
+                %text.tag= ActsAsTaggableOn::Tag.find_by(id: tag)
+          %td
+            - if request.description.present?
+              %pre= request.description
+          %td= request.solution.try(:name)
+          %td= link_to request.status, request_path(request), class: status_label(request)
+          %td
+            Created By #{ request.creator.try(:name) } at #{ request.created_at.strftime('%d %B %Y') }

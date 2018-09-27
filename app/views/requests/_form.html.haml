@@ -1,0 +1,35 @@
+%div.panel.panel-default
+  %div.panel-heading
+    %h4= 'New Job'
+%div.panel-body
+  = form_for @request do |f|
+    - if @request.errors.any?
+      #error_explanation.alert.alert-danger
+        %h4= "#{pluralize(@request.errors.count, "error")} prohibited this request from being saved:"
+        %ul
+          - @request.errors.full_messages.each do |msg|
+            %li= msg
+
+    %div.form-group
+      %label{ for: 'request_solution' }= 'Solution'
+      = f.select :solution_id, options_from_collection_for_select(member_solutions, :id, :name),
+        {}, { class: 'form-control' }
+
+    %div.form-group
+      %label{ for: 'tags' }= 'Tags'
+      = f.select :tags, options_from_collection_for_select(ActsAsTaggableOn::Tag.all, :id, :name), {},
+        { multiple: true, class: 'form-control' }
+
+    %div.form-group
+      %label{ for: 'description' }= 'Description'
+      %a#add-template-link{ href: '#' }= 'Click here to add default template'
+      %textarea#request_description.form-control{   |
+        name: 'request[description]',               |
+        placeholder: request_placeholder.html_safe, |
+        rows: 8,                                    |
+        maxlength: 500                              |
+      }= @request.description                       |
+
+  %div.panel-footer.form-actions
+    = link_to 'Back', requests_path, class: 'btn btn-warning'
+    %button.btn.btn-primary{ type: 'submit', form: "new_request_#{@request.id}" }= 'Save'

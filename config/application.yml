@@ -1,0 +1,20 @@
+defaults: &defaults
+  SERVER: 'kcldap.northamerica.cerner.net'
+  LDAP_PORT: '389'
+  BASE: 'ou=Office Locations,dc=northamerica,dc=cerner,dc=net'
+  DOMAIN: 'northamerica.cerner.net'
+  SITE: 'http://localhost:3000'
+  SITE_ADDRESS: 'http://localhost:3000'
+  secrets_key: 'CenerHREarlyAlerts2015key'
+  secrets_iv: 'CenerHREarlyAlerts2015iv'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  SITE: 'http://localhost'
+  SITE_ADDRESS: 'http://10.190.228.70'

@@ -1,0 +1,24 @@
+%script{ :src => 'http://www.google.com/jsapi', :type => 'text/javascript', :charset => 'utf-8' }
+%div.container-fluid
+  %div
+    %a.pull-right.btn.btn-primary{ href: new_solution_path }= 'New Solution'
+    %h4= 'Solutions'
+    %hr
+
+    %table.table.table-striped.table-bordered.table-hover{ class: 'data-table' }
+      %thead
+        %tr
+          %th Solution
+          %th Audit Detail
+          %th Action
+      %tbody
+        - @solutions.each do |solution|
+          %tr
+            %td= solution.name
+            %td
+              Created By #{ solution.creator.try(:name) } at #{ solution.created_at.strftime('%d %B %Y') }
+              - if solution.modifier
+                %br
+                Modified By #{ solution.modifier.name } at #{ solution.updated_at.try(:strftime, '%d %B %Y') }
+            %td
+              = link_to 'Edit', edit_solution_path(solution), class: 'btn btn-primary btn-xs'

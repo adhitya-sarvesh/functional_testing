@@ -1,0 +1,158 @@
+%article#scenario_id{'data-scenario_id' => "#{ @scenario.id }"}
+%div.container-fluid
+  %ul.nav.nav-tabs{ role: 'tablist' }
+    %li.active{ role: 'presentation' }
+      %a{ 'aria-controls': 'scenarios', 'data-toggle': 'tab', href: '#scenarios', role: 'tab' } Test Plans
+    %li{ role: 'presentation' }
+      %a{ 'aria-controls': 'dom', 'data-toggle': 'tab', href: '#dom', role: 'tab' } DOM Results
+    %li{ role: 'presentation'}
+      %a{ 'aria-controls': 'dev', 'data-toggle': 'tab', href: '#dev', role: 'tab' } Developer View
+    %li{ role: 'presentation'}
+      - if @scenario.id
+        =link_to 'Parameters', new_scenario_parameter_path(@scenario)
+
+      
+  .tab-content
+    %div#scenarios.scenario-form.jumbotron.tab-pane.active.fade.in{role: 'tabpanel'}
+      %div.panel.panel-default
+        %div.panel-heading
+          %h4#tester= @scenario.persisted? ? "Test Plan ##{@scenario.id}" : 'New Test Plan'
+
+      %div.panel-body
+        = render partial: 'xpath_modal'
+        = render partial: 'import_modal'
+        = nested_form_for @scenario, html: { id: 'save-scenario-form' } do |f|
+          - if @scenario.errors.any?
+            #error_explanation.alert.alert-danger
+              %h4= "#{pluralize(@scenario.errors.count, "error")} prohibited this scenario from being saved:"
+              %ul
+                - @scenario.errors.full_messages.each do |msg|
+                  %li= msg
+          - if !@scenario.persisted?
+            %div.form-group#copy-scenario
+              %label{ for: 'copy_scenario' }= 'Copy Test Plan'
+              = f.select :id, options_for_scenarios, {}, { class: 'form-control' }
+            %div.form-group#copy-scenario-button
+              = link_to 'Copy a Test Plan', {}, class: 'btn btn-primary btn-sm pull-right'
+          
+          %div.form-group{ class: 'col-sm-12' }           
+            %div.form-group
+              %label{ for: 'scenario_tag_list' }= 'Tags'
+              %input#scenario_tag_list.form-control{                      |
+                name: 'scenario[tag_list]',                               |
+                class: 'form-control tags-box tags-input',                |
+                multiple: 'multiple',                                     |
+                type: 'text',                                             |
+                rows: 2,                                                  |
+                maxlength: 250,                                           |
+                value: @scenario.tag_list                                 |
+              }                                                           |
+
+            %div.form-group
+              %label{ for: 'scenario_name' }= 'Name'
+              %input#scenario_name.form-control{                                        |
+                name: 'scenario[name]', placeholder: 'Test Plan Name', type: 'text',    |
+                value: @scenario.name                                                   |
+              }                                                                         |
+
+            %div.form-group
+              %label{ for: 'scenario_description' }= 'Description'
+              %textarea#scenario_description.form-control{                                          |
+                name: 'scenario[description]', placeholder: 'Description', rows: 4, maxlength: 300  |
+              }= @scenario.description                                                              |
+
+            %div.form-group
+              %label{ for: 'scenario_solution' }= 'Solution'
+              = f.select :solution_id, options_from_collection_for_select(member_solutions, :id, :name),
+                {}, { class: 'form-control' }
+
+            %div.form-group.container-fluid
+              %label{ for: 'scenario-steps' }= 'Test Plan Steps'
+              %div.row
+                = f.fields_for :scenario_steps do |steps|
+                  %div.form-group{ class: "task_#{steps.index}" }
+                  %div.form-group{ class: 'col-sm-4' }
+                    = steps.select :step_type, Scenario::STEPS, { include_blank: 'Select a Test Plan step' },
+                      { class: 'form-control select-box' }
+                  %div.form-group{ class: 'col-sm-6 value-wrapper' }
+                    - if key_value_fields?(steps)
+                      %div{ class: 'col-sm-6 no-left-padding' }= steps.text_field :step_value_key, class: 'form-control'
+                      %div{ class: 'col-sm-6 no-left-padding no-right-padding' }
+                        = steps.text_field :step_value_with, class: 'form-control'
+                    - elsif add_delay_field?(steps)
+                      %div{ class: 'col-sm-1 top-margin-7 no-left-padding' } for
+                      %div{ class: 'col-sm-2 no-left-padding' }= steps.text_field :step_value, class: 'form-control'
+                      %div{ class: 'col-sm-1 top-margin-7 no-left-padding' } Seconds
+                    - elsif disabled_fields?(steps)
+                      = steps.text_field :step_value, class: 'form-control', disabled: 'disabled'
+                    - elsif xpath_fields?(steps)
+                      %a.col-sm-1.no-left-padding{                                    |
+                        'data-toggle': 'modal', 'data-target': '#xpath_modal'         |
+                      }= 'xPath'                                                      |
+                      %div{ class: 'col-sm-11 no-left-padding no-right-padding' }
+                        = steps.text_area :step_value_key, class: 'form-control', rows: 3
+                        %br
+                      %div{ class: 'col-sm-1 no-left-padding' }= 'And'
+                      %div{ class: 'col-sm-4 no-left-padding' }
+                        %select.xpath_select.form-control
+                          %option{ value: 'fill_with', selected: set_selected(steps, 'fill_with') }= 'Fill in with'
+                          %option{ value: 'click', selected: set_selected(steps, 'click') }= 'Click'
+                      %div{ class: 'col-sm-7 no-left-padding no-right-padding' }
+                        = steps.text_field :step_value_with, class: 'form-control'
+                    - elsif select_date?(steps)
+                      %a.col-sm-1.no-left-padding{                                    |
+                        'data-toggle': 'modal', 'data-target': '#date_modal'          |
+                      }= 'xpath'                                                      |
+                      %div{ class: 'col-sm-11 no-left-padding no-right-padding' }
+                        = steps.text_area :step_value_key, class: 'form-control', rows: 3
+                        %br
+                      %div{ class: 'col-sm-1 no-left-padding' }= 'And'
+                      %div{ class: 'col-sm-4 no-left-padding' }
+                        %select.xpath_select.form-control
+                          %option{ value: 'fill_with', selected: set_selected(steps, 'fill_with') }= 'Fill in with'
+                          %option{ value: 'click', selected: set_selected(steps, 'click') }= 'Click'
+                      %div{ class: 'col-sm-7 no-left-padding no-right-padding' }
+                        = steps.text_field :step_value_with, class: 'form-control', placeholder: "MM/DD/YYYY"
+                    - elsif import_scenarios?(steps)
+                      %div{ class: 'col-sm-6 no-left-padding' }
+                        = steps.select :step_value, [], {},
+                          { class: 'form-control import_select', 'data-id': steps.object.step_value }
+                      %div.import_link{ class: 'col-sm-6 no-left-padding', id: "import_link_#{steps.index}" }                            
+                    - else
+                      = steps.text_field :step_value, class: 'form-control'
+                  %div.form-group{ class: 'col-sm-1' }
+                    = steps.link_to_remove 'Remove', class: 'remove-step btn btn-danger btn-xs top-margin-5  pull-right'
+                  %div.form-group{ class: 'col-sm-1' }
+                    = f.link_to_add 'Add step above', :scenario_steps, data: { target: ".task_#{steps.index}" },
+                      class: 'add-step btn btn-primary btn-xs top-margin-5 pull-right'
+            %div.form-group
+              = f.link_to_add 'Add Step', :scenario_steps, class: 'add-step btn btn-primary btn-sm pull-right'
+
+      %div.panel-footer.form-actions
+        %button.btn.btn-primary#save-scenario{ type: 'submit'}= 'Save and Execute'
+        - if @scenario.persisted?
+          %div= link_to 'Destroy', @scenario, method: 'delete', data: { confirm: 'Are you sure?' },
+                class: 'btn btn-danger btn-md destroy-button-align'  
+        %hr
+        %div
+          %i
+            = 'Note'
+            %li= 'Any changes to the Test Plan will require it to be Saved and then executed'
+            %li= 'Last step need NOT be a "Screenshot", this is defaulted to provide atleast one screenshot'
+
+      %hr
+      %div.container-fluid
+        %h4= 'Test Results'
+        .test-results
+          = 'Nothing to show now'
+
+    %div#dom.tab-pane.fade{ role: 'tabpanel' }
+      %h4= 'DOM Results'
+      .dom-results
+        = 'Nothing to show now'
+
+    %div#dev.tab-pane.fade{ role: 'tabpanel' }
+      %h4= 'Developer View'
+      .developer-results
+        %br= 'Nothing to show now'
+        

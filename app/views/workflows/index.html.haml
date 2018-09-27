@@ -1,0 +1,20 @@
+%div.center
+  %div.panel.panel-default
+    %div.panel-heading
+      %a.pull-right.btn.btn-primary{ href: new_workflow_path }= 'New Workflow'
+      %h4= 'Workflows'
+  %table.table.table-striped.table-bordered.table-hover{ class: 'data-table' }
+    %thead
+      %tr
+        %th Name
+        %th Audit Detail
+
+    %tbody
+      - @workflows.each do |workflow|
+        %tr
+          %td= link_to(workflow.name, edit_workflow_path(workflow))
+          %td
+            Created By #{ workflow.creator.try(:name) } at #{ workflow.created_at.strftime('%d %B %Y') }
+            - if workflow.modifier
+              %br
+              Modified By #{ workflow.modifier.name } at #{ workflow.updated_at.try(:strftime, '%d %B %Y') }

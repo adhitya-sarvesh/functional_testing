@@ -1,0 +1,51 @@
+%html
+  %head
+    %title= 'Netra'
+    = csrf_meta_tags
+    = favicon_link_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body{ style: 'margin-bottom: 80px;' }
+    %nav.navbar.navbar-default
+      %div.container-fluid
+        %div.navbar-header{ style: 'height: 50' }
+          = favicon_link_tag
+          %span{ class: 'col-xs-3' }
+            = link_to image_tag('/images/logo.png', width: 80, height: 60), root_path
+          %span{ class: 'col-xs-9' }
+            %br
+              %p{ style: 'font-size: 16px' }
+                %span= 'Netra'
+                %span.small= 'Feature Testing Platform'
+        %div.nav-links.pull-right
+          %ul.nav.navbar-nav
+            - if session[:associate_id]
+              %li{ class: current_page?('/scenarios') ? 'active' : '' }= link_to 'Test Plans', scenarios_path
+              %li{ class: current_page?('/requests') ? 'active' : '' }= link_to 'Jobs', requests_path
+              %li{ class: current_page?('/solutions') ? 'active' : '' }= link_to 'Solutions', solutions_path
+              -if Scenario.count > 0
+                %li{ class: current_page?('/workflows') ? 'active' : '' }= link_to 'Workflows', workflows_path
+              %li{ class: current_page?('/help') ? 'active' : '' }= link_to 'Help', help_path
+              %li{ class: current_page?('/log_out') ? 'active' : '' }= link_to 'Log Out', logout_path
+            - else
+              %li{ class: current_page?('/help') ? 'active' : '' }= link_to 'Help', help_path
+              %li{ class: current_page?('/log_in') ? 'active' : '' }= link_to 'Log in', login_path
+
+    %div{ class: 'container-fluid' }
+      - flash.each do |key, value|
+        .alert{ class: "alert alert-#{key == 'notice' ? 'success' : key }" }
+          %button.close{ data: { dismiss: 'alert' } } x
+          %strong= value
+
+    %div.container-fluid{ class: 'body-content' }
+      = yield
+
+    %footer.footer.navbar-fixed-bottom{                                                       |
+      style: 'background-color: #eee; height: 50px; line-height: 50px;'                       |
+    }                                                                                         |
+      %div.container-fluid
+        %span.text-muted
+          = 'Cerner'
+          .pull-right
+            %a{ href: 'https://github.cerner.com/hi-analytics-labs', target: '_blank' }
+              = 'Powered by HealtheAnalytics Labs'

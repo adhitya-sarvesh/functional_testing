@@ -1,0 +1,32 @@
+<h1 style="color: #000; background-color: #eee; padding: 5px;">Report Details</h1><table width='100%' border='1' cellspacing='0'><tr><td>Requested By</td><td>Sarvesh, Adhitya (AS062052)</td></tr><tr><td>Request Link</td><td><a href='http://localhost:3000/requests/2e816cdb-5fc3-4487-87b9-63af6f980ea0'>http://localhost:3000/requests/2e816cdb-5fc3-4487-87b9-63af6f980ea0</a></td></tr><tr><td>Request Date</td><td>04 September 2018 06:21:20 am</td></tr><tr><td colspan='2'><pre>JIRA Number: HIANDEV-XXXX
+                                          Solution: HealtheAnalytics
+                                          Test Date: 10-May-2017
+                                          Environment: Staging
+                                          Operating System: OS-X
+                                          Associate ID: AA00000
+                                          Prerequisite Evidence: N/A</pre></td></tr></table><h1 style="color: #000; background-color: #eee; padding: 5px;">Summary</h1><table width='100%' border='1' cellspacing='0'><tr><td>Status</td><td><div class='label label-danger'>Some Scenarios Failed</div></td><tr><td colspan='2'><pre>
+Scenario HealtheAnalytics Administration Groups
+  tests HealtheAnalytics Administration Groups feature (FAILED - 1)
+
+Failures:
+
+  1) Scenario HealtheAnalytics Administration Groups tests HealtheAnalytics Administration Groups feature
+     Failure/Error: session.fill_in 'principal', with: 'Abraham_Edward'
+
+     Capybara::ElementNotFound:
+       Unable to find field "principal"
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-2.13.0/lib/capybara/node/finders.rb:44:in `block in find'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-2.13.0/lib/capybara/node/base.rb:85:in `synchronize'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-2.13.0/lib/capybara/node/finders.rb:33:in `find'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-2.13.0/lib/capybara/node/actions.rb:92:in `fill_in'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-2.13.0/lib/capybara/session.rb:769:in `block (2 levels) in <class:Session>'
+     # ./spec/features/2e816cdb-5fc3-4487-87b9-63af6f980ea0/healtheanalytics_administration_groups-2e816cdb-5fc3-4487-87b9-63af6f980ea0.rb:11:in `block (2 levels) in <top (required)>'
+
+Finished in 1 minute 5.24 seconds (files took 13.93 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/features/2e816cdb-5fc3-4487-87b9-63af6f980ea0/healtheanalytics_administration_groups-2e816cdb-5fc3-4487-87b9-63af6f980ea0.rb:5 # Scenario HealtheAnalytics Administration Groups tests HealtheAnalytics Administration Groups feature
+
+</pre></td></tr></table><h1 style="color: #000; background-color: #eee; padding: 5px;">Screenshots</h1><h2 style="color: #000; background-color: #eee; padding: 5px;">Scenario</h2><table width='100%' border='1' cellspacing='0'><tr><td>Scenario</td><td>HealtheAnalytics Administration Groups</td></tr><tr><td>Description</td><td>Check for Groups</td></tr></table><br/><div style='color: #004C99; font-size: 15px;'>1. Import an existing Test Plan 8</div><br/><br/><div style='color: #004C99; font-size: 15px;'>2. Click Button Groups</div><br/><br/><div style='color: #004C99; font-size: 15px;'>3. Expect page to have Analytics Whitelist</div><br/><br/><div style='color: #004C99; font-size: 15px;'>4. Expect page to have Analytics Data Authors</div><br/><br/><div style='color: #004C99; font-size: 15px;'>5. Expect page to have Analytics Content Authors</div><br/><div><img src='http://localhost:3000'></img></div>

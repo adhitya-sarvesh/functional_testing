@@ -1,0 +1,54 @@
+= form_for([@parameter.scenario, @parameter]) do |f|
+  - if @parameter.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@parameter.errors.count, "error")} prohibited this parameter from being saved:"
+      %ul
+        - @parameter.errors.full_messages.each do |msg|
+          %li= msg
+
+  %div{class: "row"}
+    %div.form-group{class: 'col-sm-2 no-left-padding'}
+      %label{ for: 'KEY' }= 'KEY'
+      %input#parameter_key.form-control{                          |
+        name: 'parameter[key]', placeholder: '', type: 'text',    |
+        value: @parameter.key                                     |
+      }                                                           |
+
+    %div.form-group{class: 'col-sm-2 no-left-padding'}
+      %label{ for: 'VALUE' }= 'VALUE'
+      %input#parameter_value.form-control{                          |
+        name: 'parameter[value]', placeholder: '', type: 'text',    |
+        value: @parameter.value                                     |
+      }                                                             |    
+    
+    %div.form-group{class: 'col-sm-2 no-left-padding'}
+      %label{ for: 'scenario_id' }= ''
+      %input#parameter_scenario_id.form-control{                            |    
+        name: 'parameter[scenario_id]', placeholder: '', type: 'hidden',    |
+        value: @parameter.scenario_id                                       |
+      }                                                                     |   
+
+  %button.btn.btn-primary{type: 'submit'}= 'Save'
+
+%table{class: 'table table-bordered table-hover data-table'}
+  %thead
+    %tr
+      %th{class: 'col-md-2'} KEY
+      %th{class: 'col-md-2'} VALUE
+      %th{class: 'col-md-2'} SCENARIO
+      %th{class: 'col-md-2'} ACTIONS
+
+  %tbody
+    - Parameter.all.each do |parameter|
+      - if parameter.scenario.id == @parameter.scenario_id
+        %tr
+          %td= parameter.key
+          %td= parameter.value
+          %td= parameter.scenario.id
+          %td
+            = link_to 'Edit', edit_scenario_parameter_path(parameter.scenario, parameter), class: 'col-sm-2 no-left-padding'
+            = link_to 'Destroy', [parameter.scenario, parameter], :method => :delete, :data => {confirm: 'Are you sure?' }, class: 'col-sm-2 no-left-padding'
+
+%div
+  =link_to 'Back', edit_scenario_path(@parameter.scenario_id), class: 'btn btn-md btn-primary'
+
