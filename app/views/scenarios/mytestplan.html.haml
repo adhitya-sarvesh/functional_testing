@@ -1,0 +1,32 @@
+%div.center
+  %div.panel.panel-default
+    %div.panel-heading
+      %a.pull-right.btn.btn-primary{ href: new_scenario_path }= 'New Test Plan'
+      %ul.nav.nav-tabs
+        %li
+          %a{:href => "scenarios/mytestplan"} My Test Plan
+        %li
+          %a{:href => "othertestplan"} Other Test Plan
+  %table.table.table-striped.table-bordered.table-hover{ class: 'data-table' }
+    %thead
+      %tr
+        %th Name
+        %th Tags
+        %th Description
+        %th Solution
+        %th Audit Detail
+        
+    %tbody
+      - @scenarios.each do |scenario|
+        %tr
+          %td= link_to(scenario.name, edit_scenario_path(scenario)) 
+          %td.small
+            - scenario.tags.each do |tag|
+              %text.tag= link_to tag.name, scenarios_path(tag: tag.name)
+          %td= scenario.description
+          %td= scenario.solution.try(:name)
+          %td
+            Created By #{ scenario.creator.try(:name) } at #{ scenario.created_at.strftime('%d %B %Y') }
+            - if scenario.modifier
+              %br
+              Modified By #{ scenario.modifier.name } at #{ scenario.updated_at.try(:strftime, '%d %B %Y') }

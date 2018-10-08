@@ -24,7 +24,7 @@ function copyScenario(event){
  *
  * @param event The click event that triggered the function
  */
-function saveScenario(event) {
+function saveExecuteScenario(event) {
   var resultArea = $('.test-results');
   event.preventDefault();
 
@@ -34,6 +34,11 @@ function saveScenario(event) {
     '</div>'
   );
   sessionStorage.scenarioStatus = true;
+  $('#save-scenario-form').submit();
+}
+
+function saveScenario(event) {
+  sessionStorage.scenarioStatus = false;
   $('#save-scenario-form').submit();
 }
 
@@ -269,6 +274,7 @@ $.fn.exists = function() { return this.length > 0; }
 // Attach event listeners for scenario
 $(document).on('nested:fieldAdded', function(event) { selectBoxEventHandler(); });
 $(document).on('ready', function(event) { selectBoxEventHandler(); });
+$(document).on('click', '#saveExecute-scenario', function(event) { saveExecuteScenario(event); });
 $(document).on('click', '#save-scenario', function(event) { saveScenario(event); });
 $(document).on('click', '.add-step', function() { initSelect2(); });
 $(document).on('change', '.xpath_select', function(event) { xPathSelector(event); });

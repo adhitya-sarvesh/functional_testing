@@ -129,10 +129,14 @@
               = f.link_to_add 'Add Step', :scenario_steps, class: 'add-step btn btn-primary btn-sm pull-right'
 
       %div.panel-footer.form-actions
-        %button.btn.btn-primary#save-scenario{ type: 'submit'}= 'Save and Execute'
+        %button.btn.btn-primary#saveExecute-scenario{ type: 'submit'}= 'Save and Execute'
+         
+        %button.btn.btn-primary.save-button-align#save-scenario{ type: 'submit'}= 'Save'
+
+        
         - if @scenario.persisted?
           %div= link_to 'Destroy', @scenario, method: 'delete', data: { confirm: 'Are you sure?' },
-                class: 'btn btn-danger btn-md destroy-button-align'  
+                class: 'btn btn-danger btn-md destroy-button-align pad-left-10' 
         %hr
         %div
           %i

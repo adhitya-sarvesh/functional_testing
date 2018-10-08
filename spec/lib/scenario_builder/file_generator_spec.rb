@@ -76,6 +76,32 @@ RSpec.describe ScenarioBuilder::FileGenerator do
       end
     end
 
+    context 'with a select date step' do
+      context 'when used with click' do
+        before do
+          FactoryGirl.create(
+            :scenario_step, scenario: scenario, step_type: 'select_date', step_value: 'xPath field|'
+          )
+        end
+
+        it 'sets a dom_using_xpath with click command' do
+          expect(file).to receive(:puts).with("session.find(:xpath, 'xPath field').click")
+        end
+      end
+
+      context 'when used with fill_in' do
+        before do
+          FactoryGirl.create(
+            :scenario_step, scenario: scenario, step_type: 'select_date', step_value: 'xPath field|value'
+          )
+        end
+
+        it 'sets a date  with fill in command' do
+          expect(file).to receive(:puts).with("session.find(:xpath, 'xPath field').set('value')")
+        end
+      end
+    end
+
     context 'with a has_content step' do
       before do
         FactoryGirl.create(:scenario_step, scenario: scenario, step_type: 'has_content')

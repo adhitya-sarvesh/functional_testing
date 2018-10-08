@@ -1,1 +1,4 @@
 require 'scenario_builder'
+
+SCENARION_SLEEP_ENABLED=true
+SCENARION_SLEEP_DURATION=5

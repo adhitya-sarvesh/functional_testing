@@ -20,6 +20,15 @@ class ScenariosController < ApplicationController
   def edit
   end
 
+  def mytestplan
+    @scenarios = Scenario.where(:created_by => session[:associate_id])
+  end
+
+  def othertestplan
+    @scenarios = Scenario.where.not(:created_by => session[:associate_id])
+  end
+
+
   # POST /scenarios
   def create
     # check for add in steps
@@ -45,15 +54,16 @@ class ScenariosController < ApplicationController
   # PATCH/PUT /scenarios/1
   def update
     # check for add in steps
-    if params['scenario']['scenario_steps_attributes'].keys.grep(/_scenario_steps/).present?
+    if params['scenario']['scenario_steps_attributes'].present?
+      if params['scenario']['scenario_steps_attributes'].keys.grep(/_scenario_steps/).present?
       # clear all steps for reordering
-      @scenario.steps.destroy_all
+        @scenario.steps.destroy_all
 
-      params['scenario']['scenario_steps_attributes'] = add_in_params_with_order(
+        params['scenario']['scenario_steps_attributes'] = add_in_params_with_order(
         params['scenario']['scenario_steps_attributes']
       )
+      end
     end
-
     respond_to do |format|
       if @scenario.update(scenario_params.merge(updated_by: session[:associate_id]))
         format.html { redirect_to edit_scenario_path(@scenario), notice: 'Test Plan was successfully updated.' }
