@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :scenarios, except: :show do
     collection do
       post :copy
+      get :mytestplan
+      get :othertestplan
     end
     resources :parameters 
     get :generate, on: :member

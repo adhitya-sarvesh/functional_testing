@@ -2,7 +2,12 @@
   %div.panel.panel-default
     %div.panel-heading
       %a.pull-right.btn.btn-primary{ href: new_scenario_path }= 'New Test Plan'
-      %h4= 'Test Plans'
+      %ul.nav.nav-tabs
+        %li
+          %a{:href => "scenarios/mytestplan"} User Test Plan
+        %li
+          %a{:href => "scenarios/othertestplan"} Other Test Plan
+
   %table.table.table-striped.table-bordered.table-hover{ class: 'data-table' }
     %thead
       %tr

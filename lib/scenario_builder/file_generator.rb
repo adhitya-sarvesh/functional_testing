@@ -140,9 +140,8 @@ module ScenarioBuilder
           new_line = fetch_parameter(line).split('|')
           action = new_line.last == "'" ? ".click" : ".set(#{new_line.last.prepend("'")})"
 
-          line = "session.find(:xpath, #{new_line.first.concat("'")})#{action}"
-        
-       elsif line.starts_with? 'fill_in_time' 
+          line = "session.find(:xpath, #{new_line.first.concat("'")})#{action}"        
+        elsif line.starts_with? 'fill_in_time' 
           new_line = fetch_parameter(line).split('|')
           action = "with: #{new_line.last.prepend("'")}"
           action1 = ":name=>"

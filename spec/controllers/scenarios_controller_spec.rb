@@ -40,4 +40,21 @@ RSpec.describe ScenariosController, type: :controller do
       end   
     end    
   end
+  describe 'GET #mytestplan' do
+    context 'no params' do
+      it 'displays test plan of loggend user' do
+        get :mytestplan ,session: {associate_id: @scenario1.associate.id}
+        expect(controller.view_assigns["scenarios"]).to eq [@scenario1]
+      end
+    end
+  end
+
+  describe 'GET #othertestplan' do
+    context 'no params' do
+      it 'displays test plan of loggend user' do
+        get :othertestplan ,session: {associate_id: @scenario1.associate.id}
+        expect(controller.view_assigns["scenarios"]).not_to eq [@scenario1]
+      end
+    end
+  end
 end

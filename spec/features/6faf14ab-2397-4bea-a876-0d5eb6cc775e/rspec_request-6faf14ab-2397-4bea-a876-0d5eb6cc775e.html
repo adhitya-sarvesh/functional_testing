@@ -1,0 +1,42 @@
+<h1 style="color: #000; background-color: #eee; padding: 5px;">Report Details</h1><table width='100%' border='1' cellspacing='0'><tr><td>Requested By</td><td>Sarvesh, Adhitya (AS062052)</td></tr><tr><td>Request Link</td><td><a href='http://localhost:3000/requests/6faf14ab-2397-4bea-a876-0d5eb6cc775e'>http://localhost:3000/requests/6faf14ab-2397-4bea-a876-0d5eb6cc775e</a></td></tr><tr><td>Request Date</td><td>01 October 2018 05:25:53 am</td></tr><tr><td colspan='2'><pre>JIRA Number: HIANDEV-XXXX
+                                          Solution: HealtheAnalytics
+                                          Test Date: 10-May-2017
+                                          Environment: Staging
+                                          Operating System: OS-X
+                                          Associate ID: AA00000
+                                          Prerequisite Evidence: N/A</pre></td></tr></table><h1 style="color: #000; background-color: #eee; padding: 5px;">Summary</h1><table width='100%' border='1' cellspacing='0'><tr><td>Status</td><td><div class='label label-danger'>Some Scenarios Failed</div></td><tr><td colspan='2'><pre>
+Scenario date
+  tests date feature
+
+Scenario date select date
+  tests date select date feature (FAILED - 1)
+
+Failures:
+
+  1) Scenario date select date tests date select date feature
+     Failure/Error: session.select 'react-datepicker__month-select', from: 'April'
+
+     Capybara::ElementNotFound:
+       Unable to find select box "April" and Unable to find input box with datalist completion "April"
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/actions.rb:280:in `rescue in rescue in block in find_select_or_datalist_input'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/actions.rb:277:in `rescue in block in find_select_or_datalist_input'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/actions.rb:273:in `block in find_select_or_datalist_input'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/base.rb:82:in `synchronize'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/actions.rb:272:in `find_select_or_datalist_input'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/actions.rb:198:in `select'
+     # /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/session.rb:728:in `block (2 levels) in <class:Session>'
+     # ./spec/features/6faf14ab-2397-4bea-a876-0d5eb6cc775e/date_select_date-6faf14ab-2397-4bea-a876-0d5eb6cc775e.rb:12:in `block (2 levels) in <top (required)>'
+     # ------------------
+     # --- Caused by: ---
+     # Capybara::ElementNotFound:
+     #   Unable to find select box "April"
+     #   /home/adhitya/.rvm/gems/ruby-2.3.2@ACID/gems/capybara-3.8.0/lib/capybara/node/finders.rb:295:in `block in synced_resolve'
+
+Finished in 17 minutes 4 seconds (files took 7.01 seconds to load)
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/features/6faf14ab-2397-4bea-a876-0d5eb6cc775e/date_select_date-6faf14ab-2397-4bea-a876-0d5eb6cc775e.rb:5 # Scenario date select date tests date select date feature
+
+</pre></td></tr></table><h1 style="color: #000; background-color: #eee; padding: 5px;">Screenshots</h1><h2 style="color: #000; background-color: #eee; padding: 5px;">Scenario</h2><table width='100%' border='1' cellspacing='0'><tr><td>Scenario</td><td>date select date</td></tr><tr><td>Description</td><td>date time picker</td></tr></table><br/><div style='color: #004C99; font-size: 15px;'>1. Visit https://engineering.cerner.com/terra-ui/#/components/terra-date-time-picker/date-time-picker/date-time-picker</div><br/><br/><div style='color: #004C99; font-size: 15px;'>2. Find DOM using xPath //*[@id="site"]/div/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[1]/div/div/div/div/button|</div><br/><br/><div style='color: #004C99; font-size: 15px;'>3. Dropdown Options react-datepicker__month-select|April</div><br/><div><img src='http://localhost:3000'></img></div><h2 style="color: #000; background-color: #eee; padding: 5px;">Scenario</h2><table width='100%' border='1' cellspacing='0'><tr><td>Scenario</td><td>date</td></tr><tr><td>Description</td><td>dsnak,</td></tr></table><br/><div style='color: #004C99; font-size: 15px;'>1. Visit https://engineering.cerner.com/terra-ui/#/components/terra-date-time-picker/date-time-picker/date-time-picker</div><br/><br/><div style='color: #004C99; font-size: 15px;'>2. Find DOM using xPath //*[@id="site"]/div/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[1]/div/div/div/div/button|</div><br/><br/><div style='color: #004C99; font-size: 15px;'>3. Screenshot </div><br/><div><img src='http://localhost:3000/images/capybara/date-6faf14ab-2397-4bea-a876-0d5eb6cc775e-1.png'></img></div><br/><div style='color: #004C99; font-size: 15px;'>4. Select Date //*[@id="site"]/div/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[1]/div/div/div/div/input[2]|12/23/2014</div><br/><div><img src='http://localhost:3000/images/capybara/date-6faf14ab-2397-4bea-a876-0d5eb6cc775e-2.png'></img></div>

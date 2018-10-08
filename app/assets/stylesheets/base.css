@@ -91,4 +91,10 @@ body, div, table {
 .destroy-button-align{
   margin-top: -35px;
   margin-left: 1400px;
+  margin-right: 100px;
 }  
+
+.save-button-align{
+  margin-top: 0px;
+  margin-left: 10px;
+}
